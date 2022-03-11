@@ -3,6 +3,7 @@ import requests as req
 import json
 import threading
 import time
+import datetime
 
 keys = []
 
@@ -13,15 +14,16 @@ headers = {
 
 def sendKeys():
     global keys
+    timestamp = datetime.datetime.now()
+    unixTimestamp = int(timestamp.timestamp())
+
     keyData = {
-        "keyId": "1",
-        "key": keys
+        "keyId": unixTimestamp,
+        "keys": keys
     }
 
     json_data = json.dumps(keyData)
-
     res = req.post(BASE_URL+"/keys", data=json_data, headers=headers)
-    print(res)
     threading.Timer(5, sendKeys).start()
 
 sendKeys()
