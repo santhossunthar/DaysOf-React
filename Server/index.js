@@ -14,9 +14,19 @@ app.post('/api/keys', (req, res) => {
     keyStrokes = [];
     keys?.forEach(element => {
         if (element[0] === "\"" && element[element.length - 1] === "\"") {
-            keyStrokes.push(element.replaceAll('"', ''));
+            tmpElem = element.replaceAll('"', '');
+            if (tmpElem === "'") {
+                keyStrokes.push("\\" + tmpElem);
+            } else {
+                keyStrokes.push(tmpElem);
+            }
         } else if (element[0] === "'" && element[element.length - 1] === "'") {
-            keyStrokes.push(element.replaceAll("'", ""));
+            tmpElem = element.replaceAll("'", "");
+            if (tmpElem === '"') {
+                keyStrokes.push("\\" + tmpElem);
+            } else {
+                keyStrokes.push(tmpElem);
+            }
         } else {
             keyStrokes.push(element);
         }
