@@ -11,16 +11,32 @@ app.post('/api/keys', (req, res) => {
     const keyId = keyData.keyId;
     const keys = keyData.keys;
 
-    const sql = `INSERT INTO keystroke (id, keystring) VALUES ('${keyId}', ' ')`;
-
-    db.query(sql, (err, results) => {
-        if (err) {
-            console.error('Error:', err);
-            res.status(500).send('Internal Server Error');
+    keyStrokes = [];
+    keys?.forEach(element => {
+        if (element[0] === "\"" && element[element.length - 1] === "\"") {
+            keyStrokes.push(element.replaceAll('"', ''));
+        } else if (element[0] === "'" && element[element.length - 1] === "'") {
+            keyStrokes.push(element.replaceAll("'", ""));
         } else {
-            res.json(results);
+            keyStrokes.push(element);
         }
     });
+
+    const keyString = keyStrokes.join(' ');
+    const sql = `INSERT INTO keystroke (id, keystring) VALUES ('${keyId}', '${keyString}')`;
+
+    if (keyString.length !== 0) {
+        db.query(sql, (err, results) => {
+            if (err) {
+                console.error('Error:', err);
+                res.status(500).send('Internal Server Error');
+            } else {
+                res.json(results);
+            }
+        });
+    } else {
+        res.send(true);
+    }
 });
 
 app.listen(port)

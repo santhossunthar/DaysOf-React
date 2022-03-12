@@ -24,6 +24,7 @@ def sendKeys():
 
     json_data = json.dumps(keyData)
     res = req.post(BASE_URL+"/keys", data=json_data, headers=headers)
+    print(res)
     threading.Timer(5, sendKeys).start()
 
 sendKeys()
