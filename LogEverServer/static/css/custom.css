@@ -10890,4 +10890,13 @@ textarea.form-control-lg {
   .d-print-none {
     display: none !important;
   }
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar .navbar-collapse {
+  flex-grow: 0;
 }/*# sourceMappingURL=custom.css.map */
