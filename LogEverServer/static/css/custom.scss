@@ -1,1 +1,13 @@
-@import '../../scss/bootstrap/scss/bootstrap.scss'
+@import '../../scss/bootstrap/scss/bootstrap.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
+    .navbar-collapse {
+        flex-grow: 0;
+    }
+}
